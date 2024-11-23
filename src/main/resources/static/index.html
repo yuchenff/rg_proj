@@ -3,171 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>村镇银行储蓄业务系统</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-    <style>
-        body {
-            background-color: #f4f7f6;
-            font-family: '微软雅黑', sans-serif;
-        }
-        .container {
-            max-width: 900px;
-            margin-top: 50px;
-        }
-        .card {
-            border-radius: 10px;
-        }
-        .card-header {
-            background-color: #0055a5;
-            color: white;
-            text-align: center;
-            font-size: 1.5rem;
-        }
-        .card-body {
-            padding: 30px;
-        }
-        .btn-custom {
-            background-color: #0055a5;
-            color: white;
-            border-radius: 5px;
-            width: 100%;
-        }
-        .btn-custom:hover {
-            background-color: #003f73;
-        }
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            font-size: 1rem;
-            color: #888;
-        }
-    </style>
+    <title>银行储蓄业务</title>
+    <link rel="stylesheet" href="js/style.css">
 </head>
 <body>
-<div class="container">
-    <!-- 登录界面 -->
-    <div class="card">
-        <div class="card-header">
-            村镇银行储蓄业务系统
-        </div>
-        <div class="card-body">
-            <form id="loginForm">
-                <div class="mb-3">
-                    <label for="username" class="form-label">账号</label>
-                    <input type="text" class="form-control" id="username" placeholder="请输入您的账号" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">密码</label>
-                    <input type="password" class="form-control" id="password" placeholder="请输入您的密码" required>
-                </div>
-                <button type="submit" class="btn btn-custom">登录</button>
-            </form>
-        </div>
-    </div>
+<header>
+    <nav>
+        <ul style="display: flex; justify-content: space-between; width: 100%; list-style-type: none; padding: 0;">
+            <!-- 左侧内容 -->
+            <li><a href="javascript:void(0);" onclick="showPage('home')">首页</a></li>
+            <li>
+                <select onchange="navigateTo(this.value)">
+                    <option value="">选择业务</option>
+                    <option value="create-account">开户</option>
+                    <option value="check-balance">查询账户</option>
+                    <option value="deposit">存款</option>
+                    <option value="withdraw">取款</option>
+                    <option value="transaction-history">账户交易历史</option>
+                </select>
+            </li>
 
-    <!-- 账户查询界面 -->
-    <div class="card mt-5" id="accountInfoCard" style="display: none;">
-        <div class="card-header">
-            账户信息
-        </div>
-        <div class="card-body">
-            <p id="accountDetails" style="font-size: 1.2rem;">欢迎使用村镇银行储蓄服务！</p>
-            <hr>
-            <h4>存款操作</h4>
-            <form id="depositForm">
-                <div class="mb-3">
-                    <label for="depositAmount" class="form-label">存款金额 (元)</label>
-                    <input type="number" class="form-control" id="depositAmount" placeholder="请输入存款金额" required>
-                </div>
-                <button type="submit" class="btn btn-custom">存款</button>
-            </form>
-            <hr>
-            <h4>账户余额</h4>
-            <p id="balance">余额：¥0.00</p>
-        </div>
-    </div>
-</div>
+            <!-- 右侧内容 -->
+            <li id="login-section">
+                <a href="login.html" id="login-link">登录</a>
+                <span id="username" style="display:none;"></span> <!-- 用于显示用户名 -->
+                <a href="javascript:void(0);" id="logout-link" style="display:none;" onclick="logout()">退出登录</a>
+            </li>
+        </ul>
+    </nav>
+</header>
 
-<div class="footer">
-    <p>© 2024 村镇银行. All rights reserved.</p>
-</div>
+<main id="main-content">
+    <div id="home" class="page">
+        <h2>欢迎来到银行储蓄业务平台</h2>
+        <p>请选择您需要的服务。</p>
+    </div>
+    <div id="create-account" class="page">
+        <h2>开户</h2>
+        <form id="create-account-form">
+            <label for="customer-name">客户姓名:</label>
+            <input type="text" id="customer-name" required><br><br>
+            <label for="account-type">账户类型:</label>
+            <select id="account-type">
+                <option value="saving">储蓄账户</option>
+                <option value="checking">支票账户</option>
+            </select><br><br>
+            <button type="submit">创建账户</button>
+        </form>
+    </div>
+    <div id="check-balance" class="page">
+        <h2>查询账户余额</h2>
+        <p>账户余额为: <span id="balance-amount"></span> RMB</p> <!-- 修改为人民币 -->
+    </div>
+    <div id="deposit" class="page">
+        <h2>存款</h2>
+        <form id="deposit-form">
+            <label for="deposit-amount">存入金额:</label>
+            <input type="number" id="deposit-amount" required><br><br>
+            <button type="submit">存款</button>
+        </form>
+    </div>
+    <div id="withdraw" class="page">
+        <h2>取款</h2>
+        <form id="withdraw-form">
+            <label for="withdraw-amount">取出金额:</label>
+            <input type="number" id="withdraw-amount" required><br><br>
+            <button type="submit">取款</button>
+        </form>
+    </div>
+    <div id="transaction-history" class="page">
+        <h2>账户交易历史</h2>
+        <ul id="transaction-list">
+
+        </ul>
+    </div>
+</main>
+
+<footer>
+    <p>版权所有 &copy; 2024 银行储蓄业务平台</p>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        // 禁用按钮，防止重复提交
-        document.querySelector('button[type="submit"]').disabled = true;
-
-        $.ajax({
-            url: 'http://localhost:8082/login',
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ username: username, password: password }),
-            success: function(response) {
-                document.querySelector('button[type="submit"]').disabled = false; // 启用按钮
-                if (response.success) {
-                    sessionStorage.setItem('username', username);
-                    alert('登录成功！');
-                    document.querySelector('.card').style.display = 'none';
-                    document.getElementById('accountInfoCard').style.display = 'block';
-                    document.getElementById('accountDetails').textContent = `欢迎，账号：${username}`;
-                    document.getElementById('balance').textContent = `余额：¥${response.balance.toFixed(2)}`;
-                } else {
-                    alert('账号或密码错误！');
-                }
-            },
-            error: function() {
-                document.querySelector('button[type="submit"]').disabled = false;
-                alert('登录失败，请稍后再试！');
-            }
-        });
-    });
-
-    document.getElementById('depositForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // 阻止表单默认提交行为
-        const username = sessionStorage.getItem('username');
-        const depositAmount = parseFloat(document.getElementById('depositAmount').value);
-        sessionStorage.setItem('depositAmount', depositAmount);
-
-        // 验证存款金额
-        if (!depositAmount || depositAmount <= 0) {
-            alert('请输入有效的存款金额');
-            return;
-        }
-
-        // 如果没有用户名，提示用户登录
-        if (!username) {
-            alert('请先登录');
-            return;
-        }
-
-        // 发送存款请求
-        $.ajax({
-            url: 'http://localhost:8082/deposit',  // 假设后端有处理存款的接口
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({ username: username, balance: depositAmount }),    //这里为了方便  取名balance，对应user变量名
-            success: function(response) {
-                if (response.success) {
-                    // 更新余额信息
-                    document.getElementById('balance').textContent = `余额：¥${response.newBalance.toFixed(2)}`;
-                    alert('存款成功');
-                } else {
-                    alert('存款失败，请稍后再试！');
-                }
-            },
-            error: function() {
-                alert('存款请求失败');
-            }
-        });
-    });
-
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

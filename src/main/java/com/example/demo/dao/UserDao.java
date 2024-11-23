@@ -26,7 +26,7 @@ public class UserDao {
     }
 
     public int updateUser(Double depositAmount,String username) {
-        String sql = "UPDATE user SET balance = balance + ? WHERE username = ?";
+        String sql = "UPDATE user SET balance = ? WHERE username = ?";
         return jdbcTemplate.update(sql,depositAmount,username);
     }
 
