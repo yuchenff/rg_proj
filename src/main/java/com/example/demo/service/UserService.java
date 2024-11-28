@@ -19,13 +19,15 @@ public class UserService {
         return userDao.findUserByUsername(username);
     }
 
-    public int updateUser(Double depositAmount,String username) {
-        return userDao.updateUser(depositAmount,username);
+    public void updateUser(Double depositAmount, String username) {
+        userDao.updateUser(depositAmount, username);
     }
 
     public List<User> getUsers() {
         return userDao.getUsers();
     }
 
-
+    public void save(User user) {
+        userDao.save(user);
+    }
 }

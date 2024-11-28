@@ -33,4 +33,9 @@ public class UserDao {
     public List<User> getUsers() {
         return jdbcTemplate.query("select * from user",new BeanPropertyRowMapper<>(User.class));
     }
+
+    public int save(User user) {
+        String sql = "UPDATE user SET balance = ? WHERE username = ?";
+        return jdbcTemplate.update(sql,user.getBalance(),user.getUsername());
+    }
 }

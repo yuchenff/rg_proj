@@ -13,6 +13,7 @@ public class User {
     private  Double balance;
 
 
+
     public Double getBalance() {
         return balance;
     }
@@ -25,8 +26,6 @@ public class User {
     // 无参构造函数（JPA 需要）
     public User() {
     }
-
-
 
     // 带参构造函数
     public User(Long id, String username, String password , Double balance) {
